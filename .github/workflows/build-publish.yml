@@ -1,0 +1,48 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: 'update version'
+      shell: bash
+      run: |
+        buildDateNumber=$(date '+%Y.%m.%d')
+        buildId=$GITHUB_RUN_NUMBER
+        buildNumber="$buildDateNumber.$buildId"
+        echo "$buildNumber"
+        projContent=$(sed "s+<Version>[0-9][0-9]*.*[0-9]*.*[0-9]*.*</Version>+<Version>$buildNumber</Version>+g" HostedApp.csproj)
+        echo "$projContent" > HostedApp.csproj
+      working-directory: src/HostedApp
+  
+    - name: Install dependencies
+      run: dotnet restore /nologo
+      working-directory: src
+    - name: Build
+      run: dotnet build --configuration Release --no-restore /nologo
+      working-directory: src
+    - name: Test
+      run: dotnet test --no-restore --no-build --verbosity normal /nologo
+      working-directory: src
+    - name: Publish
+      run: dotnet publish --no-restore --output "../package" --verbosity normal /nologo
+      working-directory: src
+            
+    - name: 'Deploy to Azure WebApp'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: azdo-extension-playground
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: package
