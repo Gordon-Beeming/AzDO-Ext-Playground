@@ -36,12 +36,64 @@
       "args": [
         "watch",
         "run",
-        "--project",        
+        "--project",
         "${workspaceFolder}/src/HostedApp/HostedApp.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "AzDO Ext: Create",
+      "command": "tfx",
+      "type": "shell",
+      "args": [
+        "extension",
+        "create",
+        "--manifest-globs",
+        "${workspaceFolder}/src/AzDo-Ext/vss-extension.json",
+        "--rev-version"
+      ],
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "Setup: Install tfx-cli",
+      "command": "npm",
+      "type": "shell",
+      "args": [
+        "install",
+        "--global",
+        "tfx-cli"
+      ],
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "Setup: Update tfx-cli",
+      "command": "npm",
+      "type": "shell",
+      "args": [
+        "update",
+        "--global",
+        "tfx-cli"
+      ],
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "Setup: tfx login",
+      "command": "tfx",
+      "type": "shell",
+      "args": [
+        "login"
+      ],
+      "problemMatcher": [
+        "$tsc"
+      ]
     }
   ]
 }

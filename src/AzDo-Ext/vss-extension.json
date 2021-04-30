@@ -1,0 +1,49 @@
+{
+    "manifestVersion": 1,
+    "id": "azdo-extension-playground",
+    "version": "0.1.6",
+    "name": "AzDO Extension Playground",
+    "publisher": "gordon-beeming",
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
+    "Categories": ["Azure Repos"],
+    "tags": [
+        "__DoNotDownload"
+    ],
+    "scopes": [
+        "vso.graph",
+        "vso.identity"
+    ],
+    "baseUri": "https://azdo-ext.dahdah.xyz/",
+    "contributions": [{
+            "id": "ext-play-hub-group",
+            "type": "ms.vss-web.hub-group",
+            "description": "Custom hub group to show ext bits at a top level",
+            "targets": [
+                "ms.vss-web.project-hub-groups-collection"
+            ],
+            "properties": {
+                "name": "GB: Hub Group",
+                "order": 50
+            }
+        },
+        {
+            "id": "home-hub",
+            "type": "ms.vss-web.hub",
+            "description": "Shows home page from remote site.",
+            "targets": [
+                ".ext-play-hub-group"
+            ],
+            "properties": {
+                "name": "Home",
+                "order": 1,
+                "uri": "Home"
+            }
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/Gordon-Beeming/AzDO-Ext-Playground"
+    }
+}
