@@ -1,0 +1,20 @@
+{
+    "manifestVersion": 1,
+    "id": "tools",
+    "version": "0.1.0",
+    "name": "AzDO ",
+    "publisher": "gordon-beeming",
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }, {
+        "id": "Microsoft.VisualStudio.Services.Integration"
+    }],
+    "tags": [
+        "__DoNotDownload"
+    ],
+    "scopes": [
+        "vso.graph",
+        "vso.identity"
+    ],
+    "baseUri": "http://azdo-ext.dahdah.xyz/"
+}
