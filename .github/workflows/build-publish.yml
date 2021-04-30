@@ -29,16 +29,16 @@ jobs:
   
     - name: Install dependencies
       run: dotnet restore /nologo
-      working-directory: src
+      working-directory: src/HostedApp
     - name: Build
       run: dotnet build --configuration Release --no-restore /nologo
-      working-directory: src
+      working-directory: src/HostedApp
     - name: Test
       run: dotnet test --no-restore --no-build --verbosity normal /nologo
-      working-directory: src
+      working-directory: src/HostedApp
     - name: Publish
       run: dotnet publish --no-restore --no-build --output "../../package" --verbosity normal /nologo /property:GenerateFullPaths=true
-      working-directory: src
+      working-directory: src/HostedApp
             
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
