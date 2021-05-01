@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// @ts-ignore
 import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
 

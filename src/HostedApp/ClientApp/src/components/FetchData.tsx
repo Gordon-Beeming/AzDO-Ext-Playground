@@ -1,9 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState, Component } from 'react';
+import Moment from 'react-moment'
 
-export class FetchData extends Component {
-  static displayName = FetchData.name;
+interface FetchDataState {
+  forecasts: Array<forecastData>;
+  loading:boolean;
+}
 
-  constructor(props) {
+interface forecastData {
+  index:number;
+  date: Date;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string;
+}
+
+export class FetchData extends Component<any,FetchDataState> {
+  constructor(props: any) {
     super(props);
     this.state = { forecasts: [], loading: true };
   }
@@ -11,8 +23,8 @@ export class FetchData extends Component {
   componentDidMount() {
     this.populateWeatherData();
   }
-
-  static renderForecastsTable(forecasts) {
+  
+  renderForecastsTable() {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -24,9 +36,9 @@ export class FetchData extends Component {
           </tr>
         </thead>
         <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
+          {this.state.forecasts.map(forecast =>
+            <tr key={forecast.index}>
+              <td><Moment format="YYYY/MM/DD">{forecast.date}</Moment></td>
               <td>{forecast.temperatureC}</td>
               <td>{forecast.temperatureF}</td>
               <td>{forecast.summary}</td>
@@ -40,7 +52,7 @@ export class FetchData extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
+      : this.renderForecastsTable();
 
     return (
       <div>
@@ -54,6 +66,11 @@ export class FetchData extends Component {
   async populateWeatherData() {
     const response = await fetch('weatherforecast');
     const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
+    let localIndex = 0;
+    var gridData = data.map((item: any)=>{
+      item.index =localIndex++; 
+      return item;
+    });
+    this.setState({ forecasts: gridData, loading: false });
   }
 }
