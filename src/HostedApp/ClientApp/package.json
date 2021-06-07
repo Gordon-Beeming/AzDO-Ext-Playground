@@ -25,7 +25,7 @@
     "devDependencies": {
         "@types/react-router-dom": "^5.1.7",
         "@types/reactstrap": "^8.7.2",
-        "ajv": "^6.12.6",
+        "ajv": "^8.6.0",
         "cross-env": "^5.2.0",
         "eslint": "^7.17.0",
         "eslint-config-react-app": "^5.2.1",
